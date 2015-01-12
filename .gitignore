@@ -6,7 +6,6 @@
 
 .vagrant
 
-application/*
-!application/web
-
+**/*.pyc
+**/*.pyo
 **/.DS_Store
