@@ -1,0 +1,13 @@
+---
+  - name: Install GPG
+    sudo: no
+    shell: bash -c "gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3"
+
+  - name: Install RVM
+    sudo: no
+    shell: bash -c "curl -sSL https://get.rvm.io | bash -s stable --ruby={{ ruby_version }}"
+
+  - name: Do not install documentation
+    sudo: no
+    template: src=gemrc.j2 dest=~/.gemrc
+

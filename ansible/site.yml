@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo:  true
+  vars:
+    doc_root: /var/www/web
+    ruby_version: 2.1.4
+  roles:
+    - init
+    - nodejs
+    - postgres
+    - rvm
