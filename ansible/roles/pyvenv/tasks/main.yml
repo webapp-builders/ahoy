@@ -1,0 +1,56 @@
+---
+    - name: Install Python 2.7 and Pip 2.7
+    sudo: yes
+    apt:  pkg={{ item }} state=latest
+    with_items:
+    - python
+    - python-pip
+
+    - name: Install virtualenv
+    sudo: no
+    shell: bash -c "pip install virtualenv"
+
+    - name: Install virtualenv
+    sudo: no
+    shell: bash -c "pip install virtualenvwrapper"
+
+    - name: Configure virtualenvwrapper home directory
+    sudo: no
+    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> ~/.profile"
+
+
+    - name: Configure the virtualenvwrapper commands script path
+        sudo: no
+        shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile"
+
+
+    - name: Source the shell environment profile
+        sudo: no
+        shell: bash -c "source ~/.profile"
+
+
+  - name: Setup the project path variable
+        sudo: no
+        shell: bash -c "export project_path=/vagrant/application/web"
+
+  - name: create the virtual environment - bind it to the project - cd into project
+        sudo: no
+        shell: bash -c "mkvirtualenv -a $project_path -p $(which python) web"
+
+ - name: Install the project packages
+        sudo: no
+        shell: bash -c "pip install -r requirements.txt"
+
+  - name: Update the package file with installed sub packages
+        sudo: no
+        shell: bash -c "pip freeze > requirements.txt"
+
+  - name: Deactivate the virtual environment
+        sudo: no
+        shell: bash -c "deactivate"
+
+  - name: Switch to home directory
+        sudo: no
+        shell: bash -c "cd ~"
+
+
