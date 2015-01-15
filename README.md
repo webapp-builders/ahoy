@@ -65,7 +65,12 @@ You could do: `cd /someuser/myapps/`
 
 Then type below:
 ```
-git clone https://github.com/webapp-builders/groundwork.git
+git clone https://github.com/toolmakers/ahoy.git
+```
+
+or this if using ssh:
+```
+git clone git@github.com:toolmakers/ahoy.git
 ```
 
 ---------------------------------
@@ -73,7 +78,7 @@ git clone https://github.com/webapp-builders/groundwork.git
 ## Step Five
 
 ```
-cd groundwork
+cd ahoy
 ```
 
 You can confirm that you are in the correct directory by typing `ls`.<br>
@@ -145,9 +150,6 @@ vagrant provision
 A. If for any reason, you had stopped through the process and want to continue where you left off.<br>
 B. If you update your ansible recipe, and you want to update your virtual machine.
 
-
----------------------------------
-OPEN THREE TERMINAL TABS ON YOUR HOST OS
 
 
 ---------------------------------
@@ -246,28 +248,63 @@ You can play with them by typing `cd /application/web` <br>
 
 ## Step Eight(ON host OS Terminal Tab)
 
+To work on the project
+(i.e. activating the virtual environment and cd-ing into the project directory)
+Type:
+
 ```
-cd /vagrant/application/web
+workon web
 ```
 
-You are now in the project  directory.  Go to STEP NINE.
+You will now be in the project directory with the virtual environment
+named "web" activated as indicated by the (web) text before the prompt.
+
+Go to STEP NINE.
 
 
 ---------------------------------
 
 ## Step Nine(ON host OS Terminal Tab)
 
+create the database schema by typing the following:
+
 ```
-pip install -r requirements.txt
-rake db:create db:migrate
+python ./tasks/createdb.py
+```
+
+Go to STEP TEN.
+
+--------------------------------------
+## Step Ten(ON Guest OS Terminal Tab)
+
+At anytime you can deactivate the virtual environment simply by typing:
+
+```
+deactivate
+```
+
+and you can reactivate it again by again typing:
+
+```
+workon web
 ```
 
 ---------------------------------
 
-## Step Ten(ON Guest OS Terminal Tab)
+## Step Eleven(ON Guest OS Terminal Tab)
+
+Start the flask develoment server by typing:
 
 ```
 python manage.py -h 33.33.33.33
 ```
 
 Go to your browser and open http://33.33.33.33:5000
+
+
+You can stop the server by typing ctrl-c
+
+
+
+
+
