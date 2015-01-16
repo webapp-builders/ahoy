@@ -9,6 +9,7 @@ import os
 
 
 class Settings:
-    ENV = os.environ.get('ENV')
-    SECRET_KEY = os.environ['SECRET_KEY']
+    ENV = os.environ['ENV']
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = bool(os.environ.get('DEBUG'))
+    ITEMS_PER_PAGE = int(os.environ.get('ITEMS_PER_PAGE'))

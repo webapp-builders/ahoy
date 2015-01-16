@@ -7,4 +7,7 @@ app.config.from_object(Settings)
 from app.config.blueprints import register_blueprints
 register_blueprints(app)
 
+
 print app.url_map
+print app.config['DEBUG']
+print app.config.DEBUG
