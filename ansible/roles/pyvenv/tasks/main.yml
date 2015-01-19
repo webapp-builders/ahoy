@@ -44,7 +44,7 @@
     args:
       creates: /vagrant/.installed
 
-  - name: Setup the project path variable
+  - name: Create the guard file to make this playbooks steps idempotent
     sudo: no
     shell: bash -c "touch /vagrant/.installed"
     args:
