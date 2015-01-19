@@ -14,20 +14,25 @@
     sudo: no
     shell: bash -c "pip install virtualenvwrapper"
 
+  - name: Export BASH_PROFILE
+    sudo: no
+    shell: bash -c "export BASH_PROFILE=~/.bash_profile"
+
   - name: Configure virtualenvwrapper home directory
     sudo: no
-    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> ~/.profile"
-
+    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> $BASH_PROFILE"
+    args:
+      creates: /vagrant/.installed
 
   - name: Configure the virtualenvwrapper script path
     sudo: no
-    shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile"
-
+    shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
+    args:
+      creates: /vagrant/.installed
 
   - name: Source the shell environment
     sudo: no
-    shell: bash -c "source ~/.profile"
-
+    shell: bash -c "source $BASH_PROFILE"
 
   - name: Setup the project path variable
     sudo: no
@@ -36,21 +41,20 @@
   - name: create virtual environment|bind project|cd into project|activate virtual environment
     sudo: no
     shell: bash -c "mkvirtualenv -a $project_path -p $(which python) web"
+    args:
+      creates: /vagrant/.installed
 
-  - name: Install project packages
+  - name: Setup the project path variable
     sudo: no
-    shell: bash -c "pip install -r requirements.txt"
+    shell: bash -c "touch /vagrant/.installed"
+    args:
+      creates: /vagrant/.installed
 
-  - name: Update package file with installed sub packages
-    sudo: no
-    shell: bash -c "pip freeze > requirements.txt"
 
-  - name: Deactivate the virtual environment
-    sudo: no
-    shell: bash -c "deactivate"
 
-  - name: Switch to home directory
-    sudo: no
-    shell: bash -c "cd ~"
+
+
+
+
 
 
