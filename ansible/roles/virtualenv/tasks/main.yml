@@ -1,0 +1,39 @@
+---
+  - name: Export BASH_PROFILE
+    sudo: yes
+    shell: bash -c "export BASH_PROFILE=~/.bashrc"
+
+  - name: Configure virtualenvwrapper home directory
+    sudo: yes
+    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> $BASH_PROFILE"
+    args:
+      creates: /vagrant/.installed
+
+  - name: Configure the virtualenvwrapper script path
+    sudo: yes
+    shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
+    args:
+      creates: /vagrant/.installed
+
+  - name: Source the shell environment
+    sudo: yes
+    shell: bash -c "source $BASH_PROFILE"
+
+  - name: create virtual environment|bind project|cd into project|activate virtual environment
+    sudo: yes
+    shell: bash -c "mkvirtualenv -a /vagrant/application/web -p $(which python) web"
+
+
+  - name: Create the guard file to make this playbooks steps idempotent
+    sudo: yes
+    shell: bash -c "touch /vagrant/.installed"
+
+
+
+
+
+
+
+
+
+

@@ -7,54 +7,11 @@
     - python-pip
 
   - name: Install virtualenv
-    sudo: no
+    sudo: yes
     shell: bash -c "pip install virtualenv"
 
   - name: Install virtualenvwrapper
-    sudo: no
+    sudo: yes
     shell: bash -c "pip install virtualenvwrapper"
-
-  - name: Export BASH_PROFILE
-    sudo: no
-    shell: bash -c "export BASH_PROFILE=~/.bash_profile"
-
-  - name: Configure virtualenvwrapper home directory
-    sudo: no
-    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> $BASH_PROFILE"
-    args:
-      creates: /vagrant/.installed
-
-  - name: Configure the virtualenvwrapper script path
-    sudo: no
-    shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
-    args:
-      creates: /vagrant/.installed
-
-  - name: Source the shell environment
-    sudo: no
-    shell: bash -c "source $BASH_PROFILE"
-
-  - name: Setup the project path variable
-    sudo: no
-    shell: bash -c "export project_path=/vagrant/application/web"
-
-  - name: create virtual environment|bind project|cd into project|activate virtual environment
-    sudo: no
-    shell: bash -c "mkvirtualenv -a $project_path -p $(which python) web"
-    args:
-      creates: /vagrant/.installed
-
-  - name: Create the guard file to make this playbooks steps idempotent
-    sudo: no
-    shell: bash -c "touch /vagrant/.installed"
-    args:
-      creates: /vagrant/.installed
-
-
-
-
-
-
-
 
 
