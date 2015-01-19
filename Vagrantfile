@@ -7,7 +7,9 @@ Vagrant.configure("2") do |config|
 
     # Configure the network interfaces
     config.vm.network :private_network, ip:    "33.33.33.33"
-    # default rails server port
+    # default flask server port
+    config.vm.network :forwarded_port,  guest: 5000,  host: 5000
+    # default gunicorn server port
     config.vm.network :forwarded_port,  guest: 3000,  host: 3000
     # Default postgresql port
     config.vm.network :forwarded_port,  guest: 5432,  host: 5432
