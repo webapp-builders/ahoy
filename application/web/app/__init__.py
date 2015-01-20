@@ -10,4 +10,4 @@ register_blueprints(app)
 
 print app.url_map
 print app.config['DEBUG']
-print app.config.DEBUG
+print app.debug
