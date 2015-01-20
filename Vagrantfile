@@ -3,6 +3,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box       = 'ubuntu/trusty64'
     config.vm.hostname  = 'ahoy-dev'
 
+    config.vm.network :private_network, ip:    "33.33.33.33"
+
     # default flask server port
     config.vm.network :forwarded_port,  guest: 5000,  host: 5000
     # default gunicorn server port
@@ -26,12 +28,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # runs only on first vagrant up to re-provision run vagrant provision
     config.vm.provision :ansible do |ansible|
         ansible.playbook = "ansible/site.yml"
-
-        #todo fix: had to manually ssh and do this on guest os.
-        #ansible role virtualenv bash script did not work
-        #echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.profile
-        #echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile
-        #source ~/.profile
-        #mkvirtualenv -a /vagrant/web -p $(which python) web
     end
 end
