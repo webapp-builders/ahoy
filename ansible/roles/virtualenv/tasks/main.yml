@@ -1,35 +1,12 @@
 ---
-  - name: Configure virtualenvwrapper home directory if not already in BASH_PROFILE
+  - name: Configure virtualenvwrapper home directory and script path
     sudo: yes
-    shell: bash -c "grep -q 'WORKON_HOME' {{ bash_profile }} || echo 'export WORKON_HOME=/vagrant/.venv' >> {{ bash_profile }}"
+    template:
+      src: bash_profile.j2
+      dest: ~/.bash_profile
 
-  - name: Configure the virtualenvwrapper script path if not already in BASH_PROFILE
+  - name: Create and activate virtual web environment
     sudo: yes
-    shell: bash -c "grep -q 'virtualenvwrapper.sh' {{ bash_profile }} || echo 'source $(which virtualenvwrapper.sh)' >> {{ bash_profile }}"
-
-  - name: Source the shell environment
-    sudo: yes
-    shell: bash -c "source {{ bash_profile }}"
-
-  - name: create virtual environment|bind project|cd into project|activate virtual environment
-    sudo: yes
-    shell: bash -c "mkvirtualenv -a /vagrant/web -p $(which python) web"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    shell: "source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web"
+    args:
+      executable: /bin/bash
