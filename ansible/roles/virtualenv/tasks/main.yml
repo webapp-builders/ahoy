@@ -9,7 +9,7 @@
 
   - name: Configure the virtualenvwrapper script path if not already in BASH_PROFILE
     sudo: yes
-    shell: bash -c "grep -q 'virtualenvwrapper.sh' BASH_PROFILE || echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
+    shell: bash -c "grep -q 'virtualenvwrapper.sh' $BASH_PROFILE || echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
 
   - name: Source the shell environment
     sudo: yes
