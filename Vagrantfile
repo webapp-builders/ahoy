@@ -1,32 +1,32 @@
-Vagrant.configure("2") do |config|
-    # Configure the box to use
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box       = 'ubuntu/trusty64'
-    # If you can only use a 32-bit operating system, Comment line 3 and uncomment lines 5
-    # config.vm.box       = 'ubuntu/trusty32'
+    config.vm.hostname  = 'ahoy-dev'
 
-
-    # Configure the network interfaces
-    config.vm.network :private_network, ip:    "33.33.33.33"
     # default flask server port
     config.vm.network :forwarded_port,  guest: 5000,  host: 5000
     # default gunicorn server port
     config.vm.network :forwarded_port,  guest: 3000,  host: 3000
-    # Default postgresql port
+    # default postgresql port
     config.vm.network :forwarded_port,  guest: 5432,  host: 5432
 
-    # Configure shared folders
-    config.vm.synced_folder ".",  "/vagrant", id: "vagrant-root", :nfs => true
-    config.vm.synced_folder "./application", "/var/www", id: "application",  :nfs => true
-
-    # Configure VirtualBox environment
+    # config vm settings
     config.vm.provider :virtualbox do |v|
-        # If you get issues running the logged in commands, uncomment the following line:
-        # v.gui = true
         v.name = (0...8).map { (65 + rand(26)).chr }.join
         v.customize [ "modifyvm", :id, "--memory", 512 ]
     end
 
+    # Configure shared folders
+
+    # this is the defualt mapping
+    #config.vm.synced_folder "./",  "/vagrant"
+
+    # additional mappings
+    #config.vm.synced_folder "./application",  "/var/www"
+
+
     # Provision the box
+    # runs only on first vagrant up to re-provision run vagrant provision
     config.vm.provision :ansible do |ansible|
         ansible.playbook = "ansible/site.yml"
     end
