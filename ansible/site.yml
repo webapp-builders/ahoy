@@ -4,6 +4,7 @@
   vars:
     doc_root: /var/www/web
     ruby_version: 2.1.4
+    bash_profile: ~/.profile
   roles:
     - init
     - nodejs

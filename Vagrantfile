@@ -26,5 +26,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # runs only on first vagrant up to re-provision run vagrant provision
     config.vm.provision :ansible do |ansible|
         ansible.playbook = "ansible/site.yml"
+
+        #todo fix: had to manually ssh and do this on guest os.
+        #ansible role virtualenv bash script did not work
+        #echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.profile
+        #echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile
+        #source ~/.profile
+        #mkvirtualenv -a /vagrant/web -p $(which python) web
     end
 end
