@@ -1,11 +1,11 @@
 ---
   - name: Export BASH_PROFILE
     sudo: yes
-    shell: bash -c "export BASH_PROFILE=~/.bashrc"
+    shell: bash -c "export BASH_PROFILE=~/.profile"
 
   - name: Configure virtualenvwrapper home directory if not already in BASH_PROFILE
     sudo: yes
-    shell: bash -c "grep -q 'WORKON_HOME' $BASH_PROFILE || echo 'export WORKON_HOME=/vagrant/application/.venv' >> $BASH_PROFILE"
+    shell: bash -c "grep -q 'WORKON_HOME' $BASH_PROFILE || echo 'export WORKON_HOME=/vagrant/.venv' >> $BASH_PROFILE"
 
   - name: Configure the virtualenvwrapper script path if not already in BASH_PROFILE
     sudo: yes
@@ -17,7 +17,7 @@
 
   - name: create virtual environment|bind project|cd into project|activate virtual environment
     sudo: yes
-    shell: bash -c "mkvirtualenv -a /vagrant/application/web -p $(which python) web"
+    shell: bash -c "mkvirtualenv -a /vagrant/web -p $(which python) web"
 
 
 
