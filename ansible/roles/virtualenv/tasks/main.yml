@@ -3,17 +3,13 @@
     sudo: yes
     shell: bash -c "export BASH_PROFILE=~/.bashrc"
 
-  - name: Configure virtualenvwrapper home directory
+  - name: Configure virtualenvwrapper home directory if not already in BASH_PROFILE
     sudo: yes
-    shell: bash -c "echo 'export WORKON_HOME=/vagrant/application/.venv' >> $BASH_PROFILE"
-    args:
-      creates: /vagrant/.installed
+    shell: bash -c "grep -q 'WORKON_HOME' $BASH_PROFILE || echo 'export WORKON_HOME=/vagrant/application/.venv' >> $BASH_PROFILE"
 
-  - name: Configure the virtualenvwrapper script path
+  - name: Configure the virtualenvwrapper script path if not already in BASH_PROFILE
     sudo: yes
-    shell: bash -c "echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
-    args:
-      creates: /vagrant/.installed
+    shell: bash -c "grep -q 'virtualenvwrapper.sh' BASH_PROFILE || echo 'source $(which virtualenvwrapper.sh)' >> $BASH_PROFILE"
 
   - name: Source the shell environment
     sudo: yes
@@ -24,9 +20,13 @@
     shell: bash -c "mkvirtualenv -a /vagrant/application/web -p $(which python) web"
 
 
-  - name: Create the guard file to make this playbooks steps idempotent
-    sudo: yes
-    shell: bash -c "touch /vagrant/.installed"
+
+
+
+
+
+
+
 
 
 
