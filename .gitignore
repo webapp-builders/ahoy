@@ -6,8 +6,7 @@
 
 .installed
 .vagrant
-.venvs/
-
+**/.venv/
 **/*.pyc
 **/*.pyo
 **/.DS_Store

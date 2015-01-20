@@ -5,7 +5,7 @@
 
   - name: Configure virtualenvwrapper home directory
     sudo: yes
-    shell: bash -c "echo 'export WORKON_HOME=/vagrant/.venvs' >> $BASH_PROFILE"
+    shell: bash -c "echo 'export WORKON_HOME=/vagrant/application/.venv' >> $BASH_PROFILE"
     args:
       creates: /vagrant/.installed
 

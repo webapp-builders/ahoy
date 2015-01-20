@@ -19,7 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Configure shared folders
 
     # this is the defualt mapping
-    #config.vm.synced_folder "./",  "/vagrant"
+    config.vm.synced_folder "./",  "/vagrant", disabled: true
+    config.vm.synced_folder "./application",  "/vagrant"
 
     # additional mappings
     #config.vm.synced_folder "./application",  "/var/www"
