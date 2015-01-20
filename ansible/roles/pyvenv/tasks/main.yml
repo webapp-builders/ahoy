@@ -8,10 +8,10 @@
 
   - name: Install virtualenv
     sudo: yes
-    shell: bash -c "pip install virtualenv"
+    pip:
+      name: virtualenv
 
   - name: Install virtualenvwrapper
     sudo: yes
-    shell: bash -c "pip install virtualenvwrapper"
-
-
+    pip:
+      name: virtualenvwrapper
