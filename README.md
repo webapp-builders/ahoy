@@ -65,12 +65,12 @@ You could do: `cd /someuser/myapps/`
 
 Then type below:
 ```
-git clone https://github.com/toolmakers/ahoy.git
+git clone https://github.com/webapp-builders/ahoy.git
 ```
 
 or this if using ssh:
 ```
-git clone git@github.com:toolmakers/ahoy.git
+git clone git@github.com:webapp-builders/ahoy.git
 ```
 
 ---------------------------------
@@ -125,9 +125,11 @@ Sometimes, Vagrant will attempt to auto-correct this for you. In this
 case, Vagrant was unable to. This is usually because the guest machine
 is in a state which doesn't allow modifying port forwarding.
 ```
-For Rails server, find the terminal window that is running Rails locally and press `ctrl+c` together.
+For Rails server, find the terminal window that is running Rails locally and
+press `ctrl+c` together.
 
-You may not realize it, but Postgres might have started automatically at startup.
+You may not realize it, but Postgres might have started automatically at
+startup.
 If Postgresql is running, to stop your:
 
 **_For Ubuntu_**:
@@ -138,18 +140,6 @@ sudo service postgresql stop
 **_For  OSX homebrew_**:<br>
 Go online, search for "how to stop postgresql osx"<br>
 (There will be different instructions depending on how your Mac is setup).
-
----------------------------------
-
-(You may skip this command for a first time install)<br>
-Upon subsequent updates, you may want to use:
-```
-vagrant provision
-```
-**_`vagrant provision` may be used for two reasons_**:<br>
-A. If for any reason, you had stopped through the process and want to continue where you left off.<br>
-B. If you update your ansible recipe, and you want to update your virtual machine.
-
 
 
 ---------------------------------
@@ -169,79 +159,13 @@ Now this tab becomes your Guest OS Terminal Tab
 Your terminal prompt _before_:   OSX@jennifer~/myworkfiles $<br>
 Your terminal prompt _after_:   vagrant@vagrant-ubuntu-trusty-64:~$<br>
 
-Once you have typed `vagrant ssh` and your terminal prompt has successfully changed to a new one such as `vagrant@vagrant-ubuntu-trusty-64:~$` this means you are now **using the terminal of another operating system!**
+Once you have typed `vagrant ssh` and your terminal prompt has successfully
+ changed to a new one such as `vagrant@vagrant-ubuntu-trusty-64:~$` this
+ means you are now **using the terminal of another operating system!**
 
-The whole reason you are using Vagrant is to have another operating system (within your computer) to have a completely isolated environment for development.
-
----------------------------------
-
-Type `cd /vagrant`. This will put you in your virtual machine's **_Shared Directory_**. <br>
-(See "Understanding Shared Directories" below):
-
-### If you want to use your own application (like from Hartl's www.RailsTutorial.org, for example) this is a good place to start.
-
-**_For example:_**<br>
-(This is only one way to do it.  Similar to Hartl's tutorial in Section 1.3).<br>
-Once you are in the `/vagrant` directory, you could:
-* Install Rails gem, specifying version `gem install rails -v 4.2.0.beta4`
-* Create a new directory to hold all of your Rails applications `mkdir workspace`
-* Move into the workspace directory `cd workspace`
-* Create new Rails app, specifying version `rails _4.2.0.beta4_ new example_app`<br>
-  (Hartl Section 1.3, Section 2.1, Section 3.1, etc.)
-* A new Rails app should have run "bundle install" automatically, but if it did not, run `bundle install`
-* Move into your new application directory `cd example_app`
-* Run the rails server.   Running the rails server **_in Vagrant_** needs additional parameters (see STEP TEN).
-
-
-**_Instructions needed to launch Rails server locally, while in a Vagrant remote OS:_**<br>
-While in the `/vagrant` shared directory, once new application setup is complete, you may  **_skip to STEP TEN_** to launch the rails server.
-
----------------------------------
-
-### Understanding Shared Directories:
-(You can skip to **STEP EIGHT** if you understand how Vagrant shares directories)<br>
-
-  There is now a **_SHARED DIRECTORY_** between the two operating systems.
-
-  **Terminology**:<br>
-  Your normal computer's OS is called: the **_host OS_**<br>
-  The new computer's OS, you created in VirtualBox, is called: the **_remote OS_**
-
-  First off, let's get our bearings.<br>
-
-  `vagrant ssh` opened a connection between the two computers, and automatically you are now using the terminal of the remote OS.
-
-  * After you have done `vagrant ssh`
-  * After the terminal prompt change to something like `vagrant@vagrant..:~$`
-  * You are now navigating the terminal of the **_remote OS_**.
-
-Now, in the remote OS, try to list all of your files and directories, by typing `ls`.<br>
-You will likely get *no results* (or only a file or two).  You *will not* see a list of directories.<br>
-
-**Though you _did not see_ any directories, you CAN access the shared directory:<br>**
-Access the shared directory by typing `cd /vagrant`<br>
-  * This may feel counter-intuitive.  You just tried listing directories by tying `ls` and there were no results.
-  * Still, you **_CAN CHANGE INTO THE SHARED DIRECTORY_** by typing `cd /vagrant`.
-"vagrant" is the default name given to your shared directory (specified at setup).
-
-You can think of your shared directory as a portal between two operating systems.  That means that you can access your files from two locations: (1) in your virtual machines operating system (the _remote OS_), and (2) from your normal computer(the _host OS_).
-
-**_(1) Accessing the file through your remote OS:_** <br>
-(After typing `cd /vagrant`)<br>
-Once again, type `ls`.<br>
-You **will see a list of directories** populated by the project (This does not come standard.
-The project repo provided you with extra files and directories.
-You can navigate these directories as you normal would.)
-
-**_(2) Access the files through your normal machine:_**<br>
-In a seperate terminal (or however you usually browse through files and directories)...<br>
-Go to the directory where you cloned Groundwork (from **STEP FOUR**)
-
-#### These are the **_exact same files_** accessible from two locations.  If you edit them in one place, they are edited in the other.
-
-The  project has seeded you with these starter directories and files.<br>
-You can play with them by typing `cd /application/web` <br>
-(**This is the same as STEP EIGHT**)
+The whole reason you are using Vagrant is to have another operating system
+(within your computer) to have a completely isolated environment for
+development.
 
 
 ---------------------------------
@@ -249,17 +173,25 @@ You can play with them by typing `cd /application/web` <br>
 ## Step Eight(ON host OS Terminal Tab)
 
 To work on the project
-(i.e. activating the virtual environment and cd-ing into the project directory)
+
 Type:
 
 ```
 workon web
 ```
 
-You will now be in the project directory with the virtual environment
+This will activate the virtual environment and cd into the
+project directory.
+You will now be in the web project directory with the virtual environment
 named "web" activated as indicated by the (web) text before the prompt.
+Also all packages defined in requirements.txt file in the project directory
+are automatically
+re-installed every time you type workon web
+Also all environment variables exported in the .env file in the project
+directory are sourced every time you type workon web
 
 Go to STEP NINE.
+
 
 
 ---------------------------------
@@ -267,6 +199,8 @@ Go to STEP NINE.
 ## Step Nine(ON host OS Terminal Tab)
 
 create the database schema by typing the following:
+(you should skip this step for now since
+currently there is no database defined)
 
 ```
 python ./tasks/createdb.py
@@ -274,8 +208,23 @@ python ./tasks/createdb.py
 
 Go to STEP TEN.
 
---------------------------------------
+---------------------------------
+
 ## Step Ten(ON Guest OS Terminal Tab)
+
+Start the flask develoment server by typing:
+
+```
+python manage.py -h 33.33.33.33
+```
+
+Go to your browser and open http://33.33.33.33:5000
+
+
+You can stop the server by typing ctrl-c
+
+--------------------------------------
+## Step Eleven(ON Guest OS Terminal Tab)
 
 At anytime you can deactivate the virtual environment simply by typing:
 
@@ -289,22 +238,41 @@ and you can reactivate it again by again typing:
 workon web
 ```
 
+--------------------------------------
+## Step Twelve
+Open a second Host OS Terminal Tab
+cd into project directory
+
+You can run git commands for the project here.
+Note: git is not installed on the guest OS so all git management
+should be done on the Host os. Treat the Guest OS like a production
+environment and the project files on the guest os as readonly.
+
+--------------------------------------
+## Step Fourteen
+Open a third Host OS Terminal Tab
+cd into project directory
+
+You can type the command that launches your text editor here
+
+
 ---------------------------------
+Vagrant Notes:
 
-## Step Eleven(ON Guest OS Terminal Tab)
-
-Start the flask develoment server by typing:
+the initilal vagrant up command also runs the vagrant provision automiatically
+subsequent vagrant up (or vagrant reload) commands will only run the changes in the vagrantfile
+but will not run the ansible configuration specified in the vagrant file unless
+the vagrant destroy command is run before it.
+In order to run the changes in the ansible configuration
+run the following command (ON first host OS Terminal Tab)
 
 ```
-python manage.py -h 33.33.33.33
+vagrant provision
 ```
 
-Go to your browser and open http://33.33.33.33:5000
-
-
-You can stop the server by typing ctrl-c
-
-
+Note vagrant prvision will only run the changes to the ansible configuration
+but will not run changes in the vagrant file. for executing the changes in the
+vagrant file type vagrant up or vagrant reload (ON first host OS Terminal Tab)
 
 
 
