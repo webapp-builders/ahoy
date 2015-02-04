@@ -1,12 +1,16 @@
 ---
-  - name: Configure virtualenvwrapper home directory and script path
+  - name: Update bash_profile to export python virtual environment commands
     sudo: yes
-    template:
-      src: bash_profile.j2
-      dest: ~/.bash_profile
-
-  - name: Create and activate virtual web environment
-    sudo: yes
-    shell: "export WORKON_HOME=/vagrant/.venv && source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web && echo 'source .env' >> $WORKON_HOME/postactivate && echo 'pip install -r requirements.txt' >> $WORKON_HOME/postactivate && echo 'pip freeze > requirements.txt' >> $WORKON_HOME/postactivate"
+    shell: "echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.profile && echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile"
     args:
       executable: /bin/bash
+      creates: /vagrant/.venv/postactivate
+
+  - name: Create and activate python virtual environment bound to web project
+    sudo: yes
+    shell: "export WORKON_HOME=/vagrant/.venv && source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web && echo 'echo Activating virtual environment' >> $WORKON_HOME/postactivate && echo 'echo Exporting application environment variables' >> $WORKON_HOME/postactivate && echo 'source .env' >> $WORKON_HOME/postactivate && echo 'echo Installing requirements.txt packages' >> $WORKON_HOME/postactivate && echo 'pip install -r requirements.txt' >> $WORKON_HOME/postactivate && echo 'echo Freezing requirements.txt package dependencies' >> $WORKON_HOME/postactivate && echo 'pip freeze > requirements.txt' >> $WORKON_HOME/postactivate && echo 'echo Virtual environment activated' >> $WORKON_HOME/postactivate"
+    args:
+      executable: /bin/bash
+      creates: /vagrant/.venv/postactivate
+
+
