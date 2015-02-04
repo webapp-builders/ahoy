@@ -7,6 +7,6 @@
 
   - name: Create and activate virtual web environment
     sudo: yes
-    shell: "source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web"
+    shell: "export WORKON_HOME=/vagrant/.venv && source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web && echo 'source .env' >> $WORKON_HOME/postactivate && echo 'pip install -r requirements.txt' >> $WORKON_HOME/postactivate && echo 'pip freeze > requirements.txt' >> $WORKON_HOME/postactivate"
     args:
       executable: /bin/bash
