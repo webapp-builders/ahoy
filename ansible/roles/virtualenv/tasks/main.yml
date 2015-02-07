@@ -1,10 +1,14 @@
 ---
+  - name: Change file permissions
+    file: path=~/.bash_profile state=touch mode="666"
+
+
   - name: Update bash_profile to export python virtual environment commands
     sudo: yes
-    shell: "echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.profile && echo 'source $(which virtualenvwrapper.sh)' >> ~/.profile"
+    shell: "echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.bash_profile && echo 'source $(which virtualenvwrapper.sh)' >> ~/.bash_profile"
     args:
       executable: /bin/bash
-      creates: /vagrant/.venv/postactivate
+
 
   - name: Create and activate python virtual environment bound to web project
     sudo: yes
