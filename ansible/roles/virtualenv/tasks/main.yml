@@ -1,17 +1,10 @@
 ---
-  - name: Change file permissions
-    file: path=~/.bash_profile state=touch mode="666"
+  - lineinfile: dest=~/.bash_profile line='export WORKON_HOME=/vagrant/.venv'
 
-
-  - name: Update bash_profile to export python virtual environment commands
-    sudo: yes
-    shell: "echo 'export WORKON_HOME=/vagrant/.venv' >> ~/.bash_profile && echo 'source $(which virtualenvwrapper.sh)' >> ~/.bash_profile"
-    args:
-      executable: /bin/bash
-
+  - lineinfile: dest=~/.bash_profile line='source $(which virtualenvwrapper.sh)'
 
   - name: Create and activate python virtual environment bound to web project
-    sudo: yes
+    sudo: no
     shell: "export WORKON_HOME=/vagrant/.venv && source $(which virtualenvwrapper.sh) && mkvirtualenv -a /vagrant/web -p $(which python) web && echo 'echo Activating virtual environment' >> $WORKON_HOME/postactivate && echo 'echo Exporting application environment variables' >> $WORKON_HOME/postactivate && echo 'source .env' >> $WORKON_HOME/postactivate && echo 'echo Installing requirements.txt packages' >> $WORKON_HOME/postactivate && echo 'pip install -r requirements.txt' >> $WORKON_HOME/postactivate && echo 'echo Freezing requirements.txt package dependencies' >> $WORKON_HOME/postactivate && echo 'pip freeze > requirements.txt' >> $WORKON_HOME/postactivate && echo 'echo Virtual environment activated' >> $WORKON_HOME/postactivate"
     args:
       executable: /bin/bash
