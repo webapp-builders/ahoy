@@ -1,10 +1,11 @@
 ---
-  - name: Install Python 2.7 and Pip 2.7
+  - name: Install Python 2.7 and Pip 2.7 and python-dev
     sudo: yes
     apt:  pkg={{ item }} state=latest
     with_items:
     - python
     - python-pip
+    - python-dev
 
   - name: Install virtualenv
     sudo: yes
