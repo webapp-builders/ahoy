@@ -1,1 +1,48 @@
-{{page}}
+{% extends "layout/main.html" %}
+{% block body %}
+  <div class="container">
+    <div class="blog-header ">
+    <article class="flashes">
+    <p class="lead blog-description">sign in</p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                  <ul>
+                      {% for message in messages %}
+                          <li>{{message}}</li>
+                      {% endfor %}
+                  </ul>
+            {% endif %}
+        {% endwith %}
+    </article>
+    </div>
+    <form method="POST" action="{{ url_for('account.signin') }}" class="form-signin" role="form">
+    {{ form.csrf_token }}
+    {% if request.args.get('next') %}
+    <input type="hidden" name="next" value="{{request.args.get('next')}}" />
+    {% endif %}
+    <div {% if form.email.errors %} class="error" {% endif %}>
+         {{form.email(class='form-control',placeholder='Email address',size=30, maxlength=120)}}
+    </div>
+     <div class = "error">
+        <ul>
+        {% for error in form.email.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div {% if form.password.errors %} class="error" {% endif %}>
+      {{form.password(class='form-control',placeholder='Password (6 to 100 characters)',size=30, maxlength=100)}}
+    </div>
+    <div class = "error">
+        <ul>
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <p>
+     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button><br />
+     <a href="{{ url_for('account.send_password_email') }}">Forgot password?</a>
+    </form>
+  </div>
+{% endblock %}

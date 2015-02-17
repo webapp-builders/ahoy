@@ -1,0 +1,22 @@
+{% extends "layout/main.html" %}
+{% block body %}
+
+<div class="container">
+    <div class="blog-header ">
+
+<p>Thanks for creating an account</p>
+<p>You should receive an email to activate your account shortly.</p>
+<p>Clicking on the activation link in the email will activate your account and sign you in</p>
+<p>If the link expired or you did not receieve the email, you can re-send the activation link to your
+account email by Clicking <a href="{{ url_for('account.send_verification_email') }}">here</a> or by using the link on our home page</p>
+<p>For security reasons the link will expire in 24 hours.</p>
+{% if debug %}
+<p><a href="{{url}}">click here</a> to activate your new account<p>
+{% endif %}
+</div>
+</div>
+
+
+
+
+{% endblock %}

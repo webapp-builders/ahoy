@@ -1,4 +1,0 @@
-
-
-class AddEventForm:
-    pass

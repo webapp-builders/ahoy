@@ -1,0 +1,21 @@
+{
+  "name": "ahoy",
+  "version": "0.0.0",
+  "homepage": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/static/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~3.1.0",
+    "bootstrap": "~3.3.2"
+  },
+  "devDependencies": {
+    "jasmine": "~2.2.1"
+  }
+}

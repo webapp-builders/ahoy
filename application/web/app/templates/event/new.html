@@ -1,0 +1,33 @@
+{% extends "layout/dashboard.html" %}
+{% block body %}
+  <div class="container">
+    <div class="blog-header ">
+    <article class="flashes">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                  <ul>
+                      {% for message in messages %}
+                          <li>{{message}}</li>
+                      {% endfor %}
+                  </ul>
+            {% endif %}
+        {% endwith %}
+    </article>
+    </div>
+
+    <form method="POST" action="{{ url_for('event.new') }}" class="form-signin" role="form">
+    {{ form.csrf_token }}
+    <div {% if form.reminder.errors %} class="error" {% endif %}>
+         {{form.reminder(class='form-control',placeholder='Add a reminder',size=30, maxlength=120)}}
+    </div>
+     <div class = "error">
+        <ul>
+        {% for error in form.reminder.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button><br />
+    </form>
+  </div>
+{% endblock %}

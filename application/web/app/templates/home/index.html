@@ -1,1 +1,69 @@
-{{page}}
+{% extends "layout/main.html" %}
+{% block body %}
+  <div class="container">
+    <div class="blog-header ">
+      <p class="lead blog-description">remind yourself</p>
+      <!-- <a href="#">reminder galery</a> -->
+      <a href="{{ url_for('account.signin') }}">Sign in</a>
+      &nbsp;|&nbsp;<a href="{{ url_for('account.send_password_email') }}">Forgot password?</a>
+      &nbsp;|&nbsp;<a href="{{ url_for('demo.how') }}">How it works</a>
+     <br />
+
+    </div>
+    <form method="POST" action="{{ url_for('account.signup') }}" class="form-signin" role="form">
+    Create an account
+    {{ form.csrf_token }}
+
+    <article class="flashes">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                  <ul>
+                      {% for message in messages %}
+                          <li>{{message}}</li>
+                      {% endfor %}
+                  </ul>
+            {% endif %}
+        {% endwith %}
+    </article>
+
+    <div {% if form.username.errors %} class="error" {% endif %}>
+      {{form.username(class='form-control',placeholder='Username (letters,numbers,dashes)',size=30, maxlength=100)}}
+    </div>
+    <div class = "error">
+        <ul>
+        {% for error in form.username.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div {% if form.password.errors %} class="error" {% endif %}>
+      {{form.password(class='form-control',placeholder='Password (6 to 100 characters)',size=30, maxlength=100)}}
+    </div>
+    <div class = "error">
+        <ul>
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+     <div {% if form.email.errors %} class="error" {% endif %}>
+         {{form.email(class='form-control',placeholder='Email address',size=30, maxlength=120)}}
+    </div>
+     <div class = "error">
+        <ul>
+        {% for error in form.email.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <p>
+     Creation of an account constitutes your acceptance of our <a href="/static/html/terms.html">terms of service</a> and
+    <a href="/static/html/privacy.html">privacy policy</a>
+    <br />You will receive an email with a link to activate your account.
+    Click <a href="{{ url_for('account.send_verification_email') }}">here</a>
+    if you need to receive a new account activation email
+    </p>
+     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button><br />
+    </form>
+  </div>
+{% endblock %}
