@@ -170,15 +170,55 @@ development.
 
 ---------------------------------
 
-## Step Eight(ON host OS Terminal Tab)
+## Step Eight(ON guest OS Terminal Tab)
 
-To work on the project
 
-Type:
+manually add the following lines to .profile file:
+Note: this is a one time temprorary fix to deal with the issue of ansible task failing to
+update the file.
+
+export WORKON_HOME=/vagrant/.venvs
+source $(which virtualenvwrapper.sh)
+alias pgstart='/etc/init.d/postgresql restart'
+alias pipfreeze='pip freeze > requirements.txt'
+alias pipinstall='pip install -r requirements.txt'
+alias wo='workon'
+alias da='deactivate'
+alias run='python manage.py runserver'
+alias gun='gunicorn -b 127.0.0.1:4000 manage:app'
+alias browse='open -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome http://localhost:5000'
+
+
+after adding the lines, source .profile the file by typing:
+
+```
+. .profile
+```
+
+alternatively type 'exit' to end the ssh session and type 'vagrant ssh' again to connect
+to the vagrant box again.
+
+
+next make sure the database is started by typing:
+(TODO: should add this to init.d)
+
+```
+sudo /etc/init.d/postgresql restart
+```
+
+
+next type:
 
 ```
 workon web
 ```
+
+or its alias:
+
+```
+wo web
+```
+
 
 This will activate the virtual environment and cd into the
 project directory.
@@ -196,14 +236,31 @@ Go to STEP NINE.
 
 ---------------------------------
 
-## Step Nine(ON host OS Terminal Tab)
+## Step Nine(ON guest OS Terminal Tab)
+
 
 create the database schema by typing the following:
-(you should skip this step for now since
-currently there is no database defined)
+Note: when database migrations are added this step will be replaced.
+Note: that the virtual environment must be activated before this step
+Note: the database was already created via ansible. This step just creates tables.
+Note: this is a one time operation unless you need to update the database by droping
+and re-creating the tables.
+
 
 ```
-python ./tasks/createdb.py
+(web)$ python manage.py initdb.py
+```
+
+you can clear (but not delete) the db by typing:
+
+```
+(web)$ python manage.py dropdb.py
+```
+
+to see a list of available commands type:
+
+```
+(web)$ python manage.py
 ```
 
 Go to STEP TEN.
@@ -215,10 +272,17 @@ Go to STEP TEN.
 Start the flask develoment server by typing:
 
 ```
-python manage.py -h 33.33.33.33
+python manage.py runserver
 ```
 
-Go to your browser and open http://33.33.33.33:5000
+or alternatively use the alias:
+
+```
+run
+```
+
+Go to your browser and open http://localhost:5000
+
 
 
 You can stop the server by typing ctrl-c
@@ -232,11 +296,38 @@ At anytime you can deactivate the virtual environment simply by typing:
 deactivate
 ```
 
+or its alias:
+
+```
+da
+```
+
 and you can reactivate it again by again typing:
 
 ```
 workon web
 ```
+
+or its alias:
+
+```
+wo web
+```
+
+you can also see a list of all virtual environment
+
+using:
+
+```
+workon
+```
+
+or:
+
+```
+wo
+```
+
 
 --------------------------------------
 ## Step Twelve
