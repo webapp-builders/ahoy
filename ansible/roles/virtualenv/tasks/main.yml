@@ -1,23 +1,43 @@
 ---
-  - lineinfile: dest=~/.bash_profile line='export WORKON_HOME=/vagrant/.venv'
+  - name: Export Workon Directory
+    sudo: no
+    lineinfile: dest=~/.bash_profile line='export WORKON_HOME=/vagrant/.venv'
 
-  - lineinfile: dest=~/.bash_profile line='source $(which virtualenvwrapper.sh)'
+  - name: Source virtualenv wrapper
+    sudo: no
+    lineinfile: dest=~/.bash_profile line='source $(which virtualenvwrapper.sh)'
 
-  - lineinfile: dest=~/.bash_profile line="alias wo='workon'"
+  - name: Add alias for workon
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias wo='workon'"
 
-  - lineinfile: dest=~/.bash_profile line="alias da='deactivate'"
+  - name: Add alias for deactivate
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias da='deactivate'"
 
-  - lineinfile: dest=~/.bash_profile line="alias run='python manage.py runserver'"
+  - name: Add alias for run
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias run='python manage.py runserver'"
 
-  - lineinfile: dest=~/.bash_profile line="alias gun='gunicorn -b 127.0.0.1:4000 manage:app'"
+  - name: Add alias for gunicorn
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias gun='gunicorn -b 127.0.0.1:4000 manage:app'"
 
-  - lineinfile: dest=~/.bash_profile line="alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'"
+  - name: Add alias to start postgres
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'"
 
-  - lineinfile: dest=~/.bash_profile line="alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'"
+  - name: Add alias to stop postgres
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'"
 
-  - lineinfile: dest=~/.bash_profile line="alias da='pip install -r requirements.txt'"
+  - name: Add alias to run pip install
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias da='pip install -r requirements.txt'"
 
-  - lineinfile: dest=~/.bash_profile line="alias da='pip freeze > requirements.txt'"
+  - name: Add alias to run pip freeze
+    sudo: no
+    lineinfile: dest=~/.bash_profile line="alias da='pip freeze > requirements.txt'"
 
   - name: Create and activate python virtual environment bound to web project
     sudo: no
@@ -26,25 +46,34 @@
       executable: /bin/bash
       creates: /vagrant/.venv/postactivate
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='echo Activating virtual environment'
+  - name: Add line for starting venv
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='echo Activating virtual environment' create=yes
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='echo Exporting application environment variables'
+  - name: Add line to announce exporting app variables
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='echo Exporting application environment variables'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='source .env'
+  - name: Add line to source env file
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='source .env'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='echo Installing requirements.txt packages'
+  - name: Add line to announce install app requirements
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='echo Installing requirements.txt packages'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='pip install -r requirements.txt'
+  - name: Add line to install app requirements
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='pip install -r requirements.txt'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='echo Freezing requirements.txt package dependencies'
+  - name: Add line to announce free requirements
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='echo Freezing requirements.txt package dependencies'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='pip freeze > requirements.txt'
+  - name: Add line to free requirements
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='pip freeze > requirements.txt'
 
-  - lineinfile: dest=/vagrant/.venv/postactivate line='echo Virtual environment activated'
-
-
-
-
-
-
-
+  - name: Add line to announce venv activated
+    sudo: no
+    lineinfile: dest=/vagrant/.venv/postactivate line='echo Virtual environment activated'
